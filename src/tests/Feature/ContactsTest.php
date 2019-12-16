@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Contact;
+use App\User;
 use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,9 +13,20 @@ class ContactsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function a_contact_can_be_added()
+    protected $user;
+
+    protected function setUp(): void
     {
+        parent::setUp();
+
+        $this->user = factory(User::class)->create();
+    }
+
+    /** @test */
+    public function an_authenticated_user_can_add_a_contact()
+    {
+        $this->withoutExceptionHandling();
+
         $this->post('/api/contacts', $this->data());
 
         $contact = Contact::first();
@@ -23,6 +35,16 @@ class ContactsTest extends TestCase
         $this->assertEquals('test@email.com', $contact->email);
         $this->assertEquals('05/04/1994', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC String', $contact->company);
+    }
+
+    /** @test */
+    public function an_unautheticated_user_should_redirected_to_login()
+    {
+        $response = $this->post('/api/contacts',
+            array($this->data(), ['api_token' => '']));
+
+        $response->assertRedirect('/login');
+        $this->assertCount(0, Contact::all());
     }
 
     /** @test */
@@ -64,7 +86,7 @@ class ContactsTest extends TestCase
 
         $contact = factory(Contact::class)->create();
 
-        $response = $this->get('api/contacts/' . $contact->id);
+        $response = $this->get('api/contacts/' . $contact->id . '?api_token=' . $this->user->api_token);
 
         $response->assertJson([
            'name' => $contact->name,
@@ -97,7 +119,8 @@ class ContactsTest extends TestCase
 
         $contact = factory(Contact::class)->create();
 
-        $response = $this->delete('api/contacts/' . $contact->id);
+        $response = $this->delete('api/contacts/' . $contact->id,
+            ['api_token' => $this->user->api_token]);
 
         $this->assertCount(0, Contact::all());
     }
@@ -108,6 +131,7 @@ class ContactsTest extends TestCase
             'email' => 'test@email.com',
             'birthday' => '05/04/1994',
             'company' => 'ABC String',
+            'api_token' => $this->user->api_token,
         ];
     }
 }

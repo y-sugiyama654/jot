@@ -7,28 +7,33 @@ use Illuminate\Http\Request;
 
 class ContactsController extends Controller
 {
-    public function store() {
+    public function index()
+    {
+        return request()->user()->contacts;
+    }
 
+    public function store()
+    {
         Contact::create($this->validateData());
     }
 
-    public function show(Contact $contact) {
-
+    public function show(Contact $contact)
+    {
         return $contact;
     }
 
-    public function update(Contact $contact) {
-
+    public function update(Contact $contact)
+    {
         $contact->update($this->validateData());
     }
 
-    public function destroy(Contact $contact) {
-
+    public function destroy(Contact $contact)
+    {
         $contact->delete();
     }
 
-    private function validateData() {
-
+    private function validateData()
+    {
         return request()->validate([
             'name' => 'required',
             'email' => 'required|email',

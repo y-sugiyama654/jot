@@ -41,8 +41,6 @@ class ContactsTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_add_a_contact()
     {
-        $this->withoutExceptionHandling();
-
         $this->post('/api/contacts', $this->data());
 
         $contact = Contact::first();
@@ -98,8 +96,8 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function a_contact_can_be_retrieved() {
-
+    public function a_contact_can_be_retrieved()
+    {
         $contact = factory(Contact::class)->create(['user_id' => $this->user->id]);
 
         $response = $this->get('/api/contacts/' . $contact->id . '?api_token=' . $this->user->api_token);
@@ -125,11 +123,9 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function a_contact_can_be_patched() {
-
-        $this->withoutExceptionHandling();
-
-        $contact = factory(Contact::class)->create();
+    public function a_contact_can_be_patched()
+    {
+        $contact = factory(Contact::class)->create(['user_id' => $this->user->id]);
 
         $response = $this->patch('api/contacts/' . $contact->id, $this->data());
 
@@ -142,14 +138,40 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function a_contact_can_be_deleted() {
-
+    public function only_the_owner_of_contact_can_patch_the_contact()
+    {
         $contact = factory(Contact::class)->create();
+
+        $anotherUser = factory(User::class)->create();
+
+        $respons = $this->patch('/api/contacts/ ' . $contact->id,
+            array_merge($this->data(), ['apu_token' => $anotherUser->api_token]));
+
+        $respons->assertStatus(403);
+    }
+
+    /** @test */
+    public function a_contact_can_be_deleted()
+    {
+        $contact = factory(Contact::class)->create(['user_id' => $this->user->id]);
 
         $response = $this->delete('api/contacts/' . $contact->id,
             ['api_token' => $this->user->api_token]);
 
         $this->assertCount(0, Contact::all());
+    }
+
+    /** @test */
+    public function only_the_owner_can_deleted_the_contact()
+    {
+        $contact = factory(Contact::class)->create();
+
+        $anotherUser = factory(User::class)->create();
+
+        $response = $this->delete('api/contacts/' . $contact->id,
+            ['api_token' => $this->user->api_token]);
+
+        $response->assertStatus(403);
     }
 
     private function data() {

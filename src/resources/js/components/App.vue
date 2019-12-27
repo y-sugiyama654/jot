@@ -46,7 +46,22 @@
 
 <script>
     export default {
-        name: "App"
+        name: "App",
+        props: [
+            'users'
+        ],
+        mounted() {
+            window.axios.interceptors.request.use(
+                (config) => {
+                    config.data = {
+                        ...config,
+                        api_token: this.user.api_token
+                    };
+
+                    return config;
+                }
+            )
+        }
     }
 </script>
 

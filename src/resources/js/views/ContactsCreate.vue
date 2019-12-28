@@ -28,6 +28,8 @@
                     'email': '',
                     'company': '',
                     'birthday': '',
+
+                    errors: null,
                 },
                 methods: {
                     submitForm: function() {
@@ -36,7 +38,7 @@
 
                             })
                             .catch(errors => {
-
+                                this.errors = errors.response.data.errors;
                             });
                     }
                 }

@@ -2163,6 +2163,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "InputField",
   props: ['name', 'label', 'placeholder'],
@@ -2218,11 +2219,16 @@ __webpack_require__.r(__webpack_exports__);
         'name': '',
         'email': '',
         'company': '',
-        'birthday': ''
+        'birthday': '',
+        errors: null
       },
       methods: {
         submitForm: function submitForm() {
-          axios.post('/api/contacts', this.form).then(function (response) {})["catch"](function (errors) {});
+          var _this = this;
+
+          axios.post('/api/contacts', this.form).then(function (response) {})["catch"](function (errors) {
+            _this.errors = errors.response.data.errors;
+          });
         }
       }
     };
@@ -20485,7 +20491,9 @@ var render = function() {
           }
         ]
       }
-    })
+    }),
+    _vm._v(" "),
+    _c("p", { staticClass: "text-red-600 text-sm" }, [_vm._v("Error Here")])
   ])
 }
 var staticRenderFns = []

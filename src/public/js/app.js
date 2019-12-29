@@ -2166,7 +2166,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "InputField",
-  props: ['name', 'label', 'placeholder'],
+  props: ['name', 'label', 'placeholder', 'errors'],
   data: function data() {
     return {
       value: ''
@@ -2175,6 +2175,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updateField: function updateField() {
       this.$emit('update:field', this.value);
+    },
+    errorMessage: function errorMessage(field) {
+      if (this.errors && this.errors[field] && this.errors[field].length > 0) {
+        return errors[field][0];
+      }
     }
   }
 });
@@ -20493,7 +20498,14 @@ var render = function() {
       }
     }),
     _vm._v(" "),
-    _c("p", { staticClass: "text-red-600 text-sm" }, [_vm._v("Error Here")])
+    _c(
+      "p",
+      {
+        staticClass: "text-red-600 text-sm",
+        domProps: { textContent: _vm._s(_vm.errorMessage()) }
+      },
+      [_vm._v("Error Here")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -20534,6 +20546,7 @@ var render = function() {
           attrs: {
             name: "name",
             label: "Contact Name",
+            errors: _vm.errors,
             placeholder: "Contact Name"
           },
           on: {
@@ -20547,6 +20560,7 @@ var render = function() {
           attrs: {
             name: "email",
             label: "Contact Email",
+            errors: _vm.errors,
             placeholder: "Contact Email"
           },
           on: {
@@ -20557,7 +20571,12 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("InputField", {
-          attrs: { name: "company", label: "Company", placeholder: "Company" },
+          attrs: {
+            name: "company",
+            label: "Company",
+            errors: _vm.errors,
+            placeholder: "Company"
+          },
           on: {
             "update:field": function($event) {
               _vm.form.company = $event
@@ -20569,6 +20588,7 @@ var render = function() {
           attrs: {
             name: "birthday",
             label: "Birthday",
+            errors: _vm.errors,
             placeholder: "MM/DD/YYYY"
           },
           on: {

@@ -2152,37 +2152,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/InputField.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: "InputField",
-  props: ['name', 'label', 'placeholder', 'errors'],
-  data: function data() {
-    return {
-      value: ''
-    };
-  },
-  methods: {
-    updateField: function updateField() {
-      this.$emit('update:field', this.value);
-    },
-    errorMessage: function errorMessage(field) {
-      if (this.errors && this.errors[field] && this.errors[field].length > 0) {
-        return errors[field][0];
-      }
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /work/resources/js/components/InputField.vue: Unexpected token, expected \",\" (37:8)\n\n\u001b[0m \u001b[90m 35 | \u001b[39m        }\u001b[0m\n\u001b[0m \u001b[90m 36 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 37 | \u001b[39m        clearErrors\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m(field) {\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 38 | \u001b[39m            \u001b[36mif\u001b[39m (\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39merrors \u001b[33m&&\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39merrors[field] \u001b[33m&&\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39merrors[field]\u001b[33m.\u001b[39mlength \u001b[33m>\u001b[39m \u001b[35m0\u001b[39m) {\u001b[0m\n\u001b[0m \u001b[90m 39 | \u001b[39m                \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39merrors[field] \u001b[33m=\u001b[39m \u001b[36mnull\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 40 | \u001b[39m            }\u001b[0m\n    at Parser.raise (/work/node_modules/@babel/parser/lib/index.js:6983:17)\n    at Parser.unexpected (/work/node_modules/@babel/parser/lib/index.js:8376:16)\n    at Parser.expect (/work/node_modules/@babel/parser/lib/index.js:8362:28)\n    at Parser.parseObj (/work/node_modules/@babel/parser/lib/index.js:9949:14)\n    at Parser.parseExprAtom (/work/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/work/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/work/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/work/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/work/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/work/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseObjectProperty (/work/node_modules/@babel/parser/lib/index.js:10089:101)\n    at Parser.parseObjPropValue (/work/node_modules/@babel/parser/lib/index.js:10114:101)\n    at Parser.parseObjectMember (/work/node_modules/@babel/parser/lib/index.js:10038:10)\n    at Parser.parseObj (/work/node_modules/@babel/parser/lib/index.js:9958:25)\n    at Parser.parseExprAtom (/work/node_modules/@babel/parser/lib/index.js:9580:28)\n    at Parser.parseExprSubscripts (/work/node_modules/@babel/parser/lib/index.js:9213:23)\n    at Parser.parseMaybeUnary (/work/node_modules/@babel/parser/lib/index.js:9193:21)\n    at Parser.parseExprOps (/work/node_modules/@babel/parser/lib/index.js:9059:23)\n    at Parser.parseMaybeConditional (/work/node_modules/@babel/parser/lib/index.js:9032:23)\n    at Parser.parseMaybeAssign (/work/node_modules/@babel/parser/lib/index.js:8978:21)\n    at Parser.parseExportDefaultExpression (/work/node_modules/@babel/parser/lib/index.js:11846:24)\n    at Parser.parseExport (/work/node_modules/@babel/parser/lib/index.js:11748:31)\n    at Parser.parseStatementContent (/work/node_modules/@babel/parser/lib/index.js:10770:27)\n    at Parser.parseStatement (/work/node_modules/@babel/parser/lib/index.js:10666:17)\n    at Parser.parseBlockOrModuleBlockBody (/work/node_modules/@babel/parser/lib/index.js:11242:25)\n    at Parser.parseBlockBody (/work/node_modules/@babel/parser/lib/index.js:11229:10)\n    at Parser.parseTopLevel (/work/node_modules/@babel/parser/lib/index.js:10597:10)\n    at Parser.parse (/work/node_modules/@babel/parser/lib/index.js:12107:10)\n    at parse (/work/node_modules/@babel/parser/lib/index.js:12158:38)\n    at parser (/work/node_modules/@babel/core/lib/transformation/normalize-file.js:168:34)\n    at normalizeFile (/work/node_modules/@babel/core/lib/transformation/normalize-file.js:102:11)\n    at runSync (/work/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/work/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at /work/node_modules/@babel/core/lib/transform.js:34:34\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
 
 /***/ }),
 
@@ -20492,7 +20464,7 @@ var render = function() {
             _vm.value = $event.target.value
           },
           function($event) {
-            return _vm.updateField()
+            return _vm.updateField(_vm.name)
           }
         ]
       }

@@ -65,5 +65,4 @@
     .error-field {
         @apply .border-red-500 .border-b-2
     }
->>>>>>> Stashed changes
 </style>

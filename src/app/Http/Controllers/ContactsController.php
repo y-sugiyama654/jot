@@ -13,7 +13,7 @@ class ContactsController extends Controller
     {
         $this->authorize('viewAny', Contact::class);
 
-        return ContactResource::collection((request()->user()->contacts));
+        return ContactResource::collection(request()->user()->contacts);
     }
 
     public function store()
@@ -59,7 +59,7 @@ class ContactsController extends Controller
         return request()->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'birthday' => 'required|date',
+            'birthday' => 'required',
             'company' => 'required',
         ]);
     }

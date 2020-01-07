@@ -26,7 +26,6 @@ class ContactsTest extends TestCase
     /** @test */
     public function a_list_of_contacts_can_be_fetched_for_the_authenticated_user()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $anotherUser = factory(User::class)->create();
 
@@ -39,12 +38,22 @@ class ContactsTest extends TestCase
             ->assertJson([
                 'data' => [
                     [
-                        'data' => [
-                            'contact_id' => $contact->id,
+                        "data" => [
+                            'contact_id' => $contact->id
                         ]
                     ]
                 ]
             ]);
+    }
+
+    /** @test */
+    public function an_unauthenticated_user_should_redirected_to_login()
+    {
+        $response = $this->post('/api/contacts',
+            array_merge($this->data(), ['api_token' => '']));
+
+        $response->assertRedirect('/login');
+        $this->assertCount(0, Contact::all());
     }
 
     /** @test */
@@ -56,7 +65,7 @@ class ContactsTest extends TestCase
 
         $this->assertEquals('Test Name', $contact->name);
         $this->assertEquals('test@email.com', $contact->email);
-        $this->assertEquals('05/04/1994', $contact->birthday->format('m/d/Y'));
+        $this->assertEquals('05/14/1988', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC String', $contact->company);
         $response->assertStatus(Response::HTTP_CREATED);
         $response->assertJson([
@@ -70,23 +79,14 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function an_unautheticated_user_should_redirected_to_login()
-    {
-        $response = $this->post('/api/contacts',
-            array($this->data(), ['api_token' => '']));
-
-        $response->assertRedirect('/login');
-        $this->assertCount(0, Contact::all());
-    }
-
-    /** @test */
     public function fields_are_required()
     {
         collect(['name', 'email', 'birthday', 'company'])
-            ->each(function($fields) {
+            ->each(function ($field) {
                 $response = $this->post('/api/contacts',
-                    array_merge($this->data(), [$fields => '']));
-                $response->assertSessionHasErrors($fields);
+                    array_merge($this->data(), [$field => '']));
+
+                $response->assertSessionHasErrors($field);
                 $this->assertCount(0, Contact::all());
             });
     }
@@ -96,6 +96,7 @@ class ContactsTest extends TestCase
     {
         $response = $this->post('/api/contacts',
             array_merge($this->data(), ['email' => 'NOT AN EMAIL']));
+
         $response->assertSessionHasErrors('email');
         $this->assertCount(0, Contact::all());
     }
@@ -106,11 +107,11 @@ class ContactsTest extends TestCase
         $this->withoutExceptionHandling();
 
         $response = $this->post('/api/contacts',
-            array_merge($this->data(), ['birthday' => 'May 04, 1994']));
+            array_merge($this->data()));
 
         $this->assertCount(1, Contact::all());
         $this->assertInstanceOf(Carbon::class, Contact::first()->birthday);
-        $this->assertEquals('05-04-1994', Contact::first()->birthday->format('m-d-Y'));
+        $this->assertEquals('05-14-1988', Contact::first()->birthday->format('m-d-Y'));
     }
 
     /** @test */
@@ -149,13 +150,13 @@ class ContactsTest extends TestCase
     {
         $contact = factory(Contact::class)->create(['user_id' => $this->user->id]);
 
-        $response = $this->patch('api/contacts/' . $contact->id, $this->data());
+        $response = $this->patch('/api/contacts/' . $contact->id, $this->data());
 
         $contact = $contact->fresh();
 
         $this->assertEquals('Test Name', $contact->name);
         $this->assertEquals('test@email.com', $contact->email);
-        $this->assertEquals('05/04/1994', $contact->birthday->format('m/d/Y'));
+        $this->assertEquals('05/14/1988', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC String', $contact->company);
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJson([
@@ -169,16 +170,16 @@ class ContactsTest extends TestCase
     }
 
     /** @test */
-    public function only_the_owner_of_contact_can_patch_the_contact()
+    public function only_the_owner_of_the_contact_can_patch_the_contact()
     {
         $contact = factory(Contact::class)->create();
 
         $anotherUser = factory(User::class)->create();
 
-        $respons = $this->patch('/api/contacts/ ' . $contact->id,
-            array_merge($this->data(), ['apu_token' => $anotherUser->api_token]));
+        $response = $this->patch('/api/contacts/' . $contact->id,
+            array_merge($this->data(), ['api_token' => $anotherUser->api_token]));
 
-        $respons->assertStatus(403);
+        $response->assertStatus(403);
     }
 
     /** @test */
@@ -186,32 +187,32 @@ class ContactsTest extends TestCase
     {
         $contact = factory(Contact::class)->create(['user_id' => $this->user->id]);
 
-        $response = $this->delete('api/contacts/' . $contact->id,
+        $response = $this->delete('/api/contacts/' . $contact->id,
             ['api_token' => $this->user->api_token]);
 
         $this->assertCount(0, Contact::all());
-
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     /** @test */
-    public function only_the_owner_can_deleted_the_contact()
+    public function only_the_owner_can_delete_the_contact()
     {
         $contact = factory(Contact::class)->create();
 
         $anotherUser = factory(User::class)->create();
 
-        $response = $this->delete('api/contacts/' . $contact->id,
+        $response = $this->delete('/api/contacts/' . $contact->id,
             ['api_token' => $this->user->api_token]);
 
         $response->assertStatus(403);
     }
 
-    private function data() {
+    private function data()
+    {
         return [
             'name' => 'Test Name',
             'email' => 'test@email.com',
-            'birthday' => '05/04/1994',
+            'birthday' => '05/14/1988',
             'company' => 'ABC String',
             'api_token' => $this->user->api_token,
         ];

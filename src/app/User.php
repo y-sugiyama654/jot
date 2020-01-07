@@ -39,6 +39,6 @@ class User extends Authenticatable
 
     public function contacts()
     {
-        return $this->hasMany(contact::class);
+        return $this->hasMany(Contact::class);
     }
 }

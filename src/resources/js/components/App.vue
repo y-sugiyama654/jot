@@ -32,7 +32,7 @@
                     <div>
                        Contacts
                     </div>
-                    <UserCircle />
+                    <UserCircle :name="user.name" />
                 </div>
                 <div class="flex flex-col overflow-y-hidden flex-1">
                     <router-view class="p-6 overflow-x-hidden"></router-view>

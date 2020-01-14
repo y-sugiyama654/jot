@@ -47,7 +47,7 @@
     export default {
         name: "App",
         props: [
-            'users'
+            'user'
         ],
         components: {
             UserCircle

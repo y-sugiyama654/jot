@@ -21463,7 +21463,7 @@ var render = function() {
                     staticClass:
                       "px-4 py-2 rounded text-sm text-green-500 border border-green-500 font-bold mr-2",
                     attrs: {
-                      to: "/contact/" + _vm.contact.contact_id + "/edit"
+                      to: "/contacts/" + _vm.contact.contact_id + "/edit"
                     }
                   },
                   [_vm._v("Edit")]
@@ -21489,7 +21489,9 @@ var render = function() {
             [
               _c("UserCircle", { attrs: { name: _vm.contact.name } }),
               _vm._v(" "),
-              _c("p", { staticClass: "pl-5 text-xl " }, [_vm._v("Yuta")])
+              _c("p", { staticClass: "pl-5 text-xl" }, [
+                _vm._v(_vm._s(_vm.contact.name))
+              ])
             ],
             1
           ),
@@ -21501,7 +21503,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("p", { staticClass: "pt-2 text-blue-400" }, [
-            _vm._v("yuta@gmail.com")
+            _vm._v(_vm._s(_vm.contact.email))
           ]),
           _vm._v(" "),
           _c(
@@ -21510,7 +21512,9 @@ var render = function() {
             [_vm._v("Company")]
           ),
           _vm._v(" "),
-          _c("p", { staticClass: "pt-2 text-blue-400" }, [_vm._v("e-ize.inc")]),
+          _c("p", { staticClass: "pt-2 text-blue-400" }, [
+            _vm._v(_vm._s(_vm.contact.company))
+          ]),
           _vm._v(" "),
           _c(
             "p",
@@ -21518,7 +21522,9 @@ var render = function() {
             [_vm._v("Birthday")]
           ),
           _vm._v(" "),
-          _c("p", { staticClass: "pt-2 text-blue-400" }, [_vm._v("1994/05/04")])
+          _c("p", { staticClass: "pt-2 text-blue-400" }, [
+            _vm._v(_vm._s(_vm.contact.birthday))
+          ])
         ])
   ])
 }

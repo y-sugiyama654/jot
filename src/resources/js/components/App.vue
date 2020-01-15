@@ -43,11 +43,11 @@
 </template>
 
 <script>
-    import UserCircle from "./UserCircle";
+    import UserCircle from './UserCircle';
     export default {
         name: "App",
         props: [
-            'users'
+            'user'
         ],
         components: {
             UserCircle

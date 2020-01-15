@@ -6,7 +6,7 @@
             <InputField name="company" label="Company" :errors="errors" placeholder="Company" @update:field="form.company = $event" />
             <InputField name="birthday" label="Birthday" :errors="errors" placeholder="MM/DD/YYYY" @update:field="form.birthday = $event" />
             <div class="flex justify-end">
-                <button class="py-2 px-4 rounded text-red-700 border mr-5 hover:border-red-700">Cansel</button>
+                <button class="py-2 px-4 rounded text-red-700 border mr-5 hover:border-red-700">Cancel</button>
                 <button class="bg-blue-500 py-2 px-4 rounded text-white hover:bg-blue-700">Add New Contact</button>
             </div>
         </form>
@@ -27,9 +27,8 @@
                     'email': '',
                     'company': '',
                     'birthday': '',
-                    errors: null,
-                }
-
+                },
+                errors: null,
             }
         },
         methods: {

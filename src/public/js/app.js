@@ -2194,7 +2194,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     errorMessage: function errorMessage() {
       if (this.hasError) {
-        return errors[this.name][0];
+        return this.errors[this.name][0];
       }
     },
     clearErrors: function clearErrors() {
@@ -2280,9 +2280,9 @@ __webpack_require__.r(__webpack_exports__);
         'name': '',
         'email': '',
         'company': '',
-        'birthday': '',
-        errors: null
-      }
+        'birthday': ''
+      },
+      errors: null
     };
   },
   methods: {
@@ -21243,7 +21243,7 @@ var render = function() {
       ],
       staticClass:
         "pt-8 w-full text-gray-900 border-b pb-2 focus:outline-none focus:border-blue-400",
-      class: _vm.errorClassObject(_vm.name),
+      class: _vm.errorClassObject(),
       attrs: { id: _vm.name, type: "text", placeholder: _vm.placeholder },
       domProps: { value: _vm.value },
       on: {
@@ -21255,7 +21255,7 @@ var render = function() {
             _vm.value = $event.target.value
           },
           function($event) {
-            return _vm.updateField(_vm.name)
+            return _vm.updateField()
           }
         ]
       }
@@ -21410,7 +21410,7 @@ var staticRenderFns = [
           staticClass:
             "py-2 px-4 rounded text-red-700 border mr-5 hover:border-red-700"
         },
-        [_vm._v("Cansel")]
+        [_vm._v("Cancel")]
       ),
       _vm._v(" "),
       _c(

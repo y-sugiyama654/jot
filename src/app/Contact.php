@@ -2,7 +2,7 @@
 
 namespace App;
 
-use sCarbon\Carbon;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
